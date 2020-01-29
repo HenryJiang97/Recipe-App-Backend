@@ -1,0 +1,21 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.format.settings.profile": "GoogleStyle",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "build": true,
+        ".gradle": true,
+        "bin": true,
+        "gradle": true,
+        ".settings": true,
+        ".classpath": true,
+        ".project": true,
+        "gradlew": true,
+        "gradlew.bat": true,
+    },
+    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+}

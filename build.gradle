@@ -1,0 +1,110 @@
+plugins {
+    // Build "fat" jars for deployment
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'
+
+    // Deploy directly to heroku without using Git
+    id "com.heroku.sdk.heroku-gradle" version "1.0.4"
+
+    // Lombok provides shorthand for repetitive Java tasks
+    id "io.freefair.lombok" version "4.1.6"
+
+    // Spotless to format code easily
+    id "com.diffplug.gradle.spotless" version "3.27.1"
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+dependencies {
+    // Simple HTTP framework - http://sparkjava.com/
+    implementation 'com.sparkjava:spark-core:2.9.1'
+
+    // Basic logging support; used by Spark
+    implementation "org.slf4j:slf4j-simple:1.7.25"
+
+    // Jackson to serialize/deserialize JSON
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.2'
+
+    // Use JUnit Jupiter API for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+
+    // Use dagger for dependency injection
+    implementation 'com.google.dagger:dagger:2.26'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.26'
+
+    // Annotations such as Nullable
+    implementation 'com.google.code.findbugs:annotations:3.0.1'
+
+    // Force JRE Guava to work around issues with Truth
+    testImplementation "com.google.guava:guava:28.2-jre"
+
+    // Fluent assertions for testing
+    testImplementation 'com.google.truth:truth:1.0.1'
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'edu.northeastern.cs5500.recipe.App'
+}
+
+test {
+    // Use junit platform for unit tests
+    useJUnitPlatform()
+}
+
+// Heroku will run the 'stage' task on deployment via git
+task stage(dependsOn: ['clean', 'shadowJar'])
+shadowJar.mustRunAfter clean
+
+// Force all builds to be clean builds due to Dagger problems
+build.mustRunAfter clean
+build.dependsOn += 'clean'
+
+run.mustRunAfter clean
+run.dependsOn += 'clean'
+
+// Target Java 1.8 - make sure system.properties matches this as well
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java'
+            srcDirs 'build/generated/sources/annotationProcessor/java/main'
+        }
+    }
+    test {
+        java {
+            srcDirs 'src/test/java'
+            srcDirs 'build/generated/sources/annotationProcessor/java/test'
+        }
+    }
+}
+
+spotless {
+    format 'misc', {
+        target '**/*.gradle', '**/*.md', '**/.gitignore'
+        targetExclude 'build/**'
+
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    java {
+        targetExclude 'build/**'
+        googleJavaFormat().aosp()
+    }
+}
