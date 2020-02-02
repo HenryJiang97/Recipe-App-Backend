@@ -25,7 +25,7 @@ class RecipeControllerTest {
         recipeController.register();
 
         for (Recipe recipe : recipeController.getRecipes()) {
-            assertWithMessage(recipe.getTitle()).that(recipe.isValid()).isFalse();
+            assertWithMessage(recipe.getTitle()).that(recipe.isValid()).isTrue();
         }
     }
 
