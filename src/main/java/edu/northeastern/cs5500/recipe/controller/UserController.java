@@ -1,12 +1,12 @@
 package edu.northeastern.cs5500.recipe.controller;
 
+import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.User;
-import java.util.UUID;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.HashMap;
-
+import java.util.Map;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -73,7 +73,6 @@ public class UserController implements Controller {
             id = user.getId();
         }
 
-
         if (users.containsKey(id)) {
             // TODO: replace with a real duplicate key exception
             throw new Exception("DuplicateKeyException");
@@ -113,5 +112,23 @@ public class UserController implements Controller {
         }
 
         users.remove(id);
+    }
+
+    
+    // Methods
+    private Rating rateRecipe(Recipe recipe) {
+
+    }
+
+    private boolean connectSmartDevices() {
+        return true;
+    }
+
+    private boolean login() {
+        return true;
+    }
+
+    private List<Recipe> favoriteRacipes() {
+        
     }
 }

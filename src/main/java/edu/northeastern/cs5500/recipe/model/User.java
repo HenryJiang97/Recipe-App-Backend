@@ -1,11 +1,9 @@
 package edu.northeastern.cs5500.recipe.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-
+import java.util.UUID;
 import lombok.Data;
 
 @Data
