@@ -47,7 +47,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testCanReplaceRecipe() throws Exception{
+    void testCanReplaceRecipe() throws Exception {
         // This test should NOT call register
         // TODO: implement this test.
 
@@ -69,7 +69,6 @@ class RecipeControllerTest {
             assertThat(recipe).isEqualTo(defaultRecipe2);
             assertThat(recipe).isNotEqualTo(defaultRecipe1);
         }
-
     }
 
     @Test

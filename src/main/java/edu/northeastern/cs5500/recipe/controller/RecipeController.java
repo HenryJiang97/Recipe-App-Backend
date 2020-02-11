@@ -128,7 +128,7 @@ public class RecipeController implements Controller {
         recipes.remove(id);
     }
 
-    public double updateAverageRating(@Nonnull Recipe recipe){
+    public double updateAverageRating(@Nonnull Recipe recipe) {
         /*
         listOfRatings = recipe.getRatings();
         for( Rating rating : listOfRatings){
@@ -146,23 +146,21 @@ public class RecipeController implements Controller {
 
         */
         return 0.0;
-
     }
 
-    public Recipe changeRecipeToUserPreferences(Map<String, String> preferences) throws Exception{
+    public Recipe changeRecipeToUserPreferences(Map<String, String> preferences) throws Exception {
         throw new Exception("This has not been implemented yet");
     }
 
-    private int computeTime(Recipe recipe){
+    private int computeTime(Recipe recipe) {
         // List of Directions takes in the time property of each direction and checks its enum to
         // see if it is the enum of what i want to compute if it is then add it the total time.
         // Enum directionType
         return 0;
     }
 
-    public int getTotalTime(Recipe recipe){
+    public int getTotalTime(Recipe recipe) {
         // This will also need a parameter enum also maybe should check if this already created for
         return computeTime(recipe);
-
     }
 }
