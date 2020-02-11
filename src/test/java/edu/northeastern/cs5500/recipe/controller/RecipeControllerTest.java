@@ -20,7 +20,6 @@ class RecipeControllerTest {
 
     @Test
     void testRegisterCreatesValidRecipes() {
-        // TODO: Why is this test failing?
         RecipeController recipeController = new RecipeController();
         recipeController.register();
 
@@ -30,20 +29,65 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testCanAddRecipe() {
+    void testCanAddRecipe() throws Exception {
         // This test should NOT call register
         // TODO: implement this test.
+        RecipeController recipeController = new RecipeController();
+
+        final Recipe defaultRecipe1 = new Recipe();
+        defaultRecipe1.setTitle("Hot dog");
+        recipeController.addRecipe(defaultRecipe1);
+
+        final Recipe defaultRecipe2 = new Recipe();
+        defaultRecipe2.setTitle("Hot ");
+
+        for (Recipe recipe : recipeController.getRecipes()) {
+            assertThat(recipe).isEqualTo(defaultRecipe1);
+        }
     }
 
     @Test
-    void testCanReplaceRecipe() {
+    void testCanReplaceRecipe() throws Exception{
         // This test should NOT call register
         // TODO: implement this test.
+
+        RecipeController recipeController = new RecipeController();
+
+        final Recipe defaultRecipe1 = new Recipe();
+        defaultRecipe1.setTitle("Hot dog");
+        recipeController.addRecipe(defaultRecipe1);
+
+        final Recipe defaultRecipe2 = new Recipe();
+        defaultRecipe2.setTitle("Cold");
+        defaultRecipe2.setId(defaultRecipe1.getId());
+
+        for (Recipe recipe : recipeController.getRecipes()) {
+            assertThat(recipe).isEqualTo(defaultRecipe1);
+        }
+        recipeController.updateRecipe(defaultRecipe2);
+        for (Recipe recipe : recipeController.getRecipes()) {
+            assertThat(recipe).isEqualTo(defaultRecipe2);
+            assertThat(recipe).isNotEqualTo(defaultRecipe1);
+        }
+
     }
 
     @Test
-    void testCanDeleteRecipe() {
+    void testCanDeleteRecipe() throws Exception {
         // This test should NOT call register
         // TODO: implement this test
+
+        RecipeController recipeController = new RecipeController();
+        final Recipe defaultRecipe1 = new Recipe();
+        defaultRecipe1.setTitle("Hot dog");
+        recipeController.addRecipe(defaultRecipe1);
+        final Recipe defaultRecipe2 = new Recipe();
+        defaultRecipe2.setTitle("Cold");
+        recipeController.addRecipe(defaultRecipe2);
+        recipeController.deleteRecipe(defaultRecipe1.getId());
+        for (Recipe recipe : recipeController.getRecipes()) {
+            assertThat(recipe).isEqualTo(defaultRecipe2);
+            assertThat(recipe).isNotEqualTo(defaultRecipe1);
+        }
     }
 }
