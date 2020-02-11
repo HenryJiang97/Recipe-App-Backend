@@ -5,6 +5,7 @@ import edu.northeastern.cs5500.recipe.model.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
@@ -114,11 +115,11 @@ public class UserController implements Controller {
         users.remove(id);
     }
 
-    
     // Methods
-    private Rating rateRecipe(Recipe recipe) {
 
-    }
+    // private Rating rateRecipe(Recipe recipe) {
+
+    // }
 
     private boolean connectSmartDevices() {
         return true;
@@ -128,7 +129,8 @@ public class UserController implements Controller {
         return true;
     }
 
-    private List<Recipe> favoriteRacipes() {
-        
+    private List<Recipe> favoriteRecipes() {
+        List<Recipe> recipeList = new ArrayList<>();
+        return recipeList;
     }
 }
