@@ -63,4 +63,20 @@ public class User {
     private void favoriteRecipe(Recipe favoriteRecipe) {
         this.favoriteRecipes.add(favoriteRecipe);
     }
+
+    /**
+    * Get the unique id of the user.
+    */
+    public UUID getId() {
+        return this.id;
+    }
+
+    /**
+    * Set the unique id of the user.
+    */
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    
 }

@@ -10,9 +10,12 @@ import edu.northeastern.cs5500.recipe.model.User;
 import org.junit.jupiter.api.Test;
 
 class UserControllerTest {
+    private User user;
+
     @Test
     void testRegisterCreatesUsers() {
-        UserController userController = new UserController();
+        this.user = new User();
+        UserController userController = new UserController(user);
         assertThat(userController.getUser()).isEmpty();
         userController.register();
         assertThat(userController.getUser()).isNotEmpty();
@@ -21,7 +24,7 @@ class UserControllerTest {
     @Test
     void testRegisterCreatesValidUsers() {
         // TODO: Why is this test failing?
-        UserController userController = new UserController();
+        UserController userController = new UserController(user);
         userController.register();
 
         for (User user : userController.getUser()) {
@@ -33,32 +36,21 @@ class UserControllerTest {
     void testCanAddUser() {
         // This test should NOT call register
         // TODO: implement this test.
+        UserController userController = new UserController(user);
+        
     }
 
     @Test
     void testCanReplaceUser() {
         // This test should NOT call register
         // TODO: implement this test.
+
     }
 
     @Test
     void testCanDeleteUser() {
         // This test should NOT call register
         // TODO: implement this test
-    }
 
-    @Test
-    void testCanConnectSmartDevice() {
-
-    }
-
-    @Test
-    void testCanLogin() {
-
-    }
-
-    @Test
-    void testCanFavoriteRecipes() {
-        
     }
 }
