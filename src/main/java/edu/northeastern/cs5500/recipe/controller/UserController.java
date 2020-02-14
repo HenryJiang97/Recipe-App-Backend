@@ -1,11 +1,10 @@
 package edu.northeastern.cs5500.recipe.controller;
 
-import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.User;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
@@ -20,8 +19,8 @@ public class UserController implements Controller {
     private Map<UUID, User> users;
 
     @Inject
-    UserController() {
-        users = new HashMap<>();
+    UserController(User user) {
+        this.users = new HashMap<>();
     }
 
     @Override
@@ -115,22 +114,5 @@ public class UserController implements Controller {
         users.remove(id);
     }
 
-    // Methods
-
-    // private Rating rateRecipe(Recipe recipe) {
-
-    // }
-
-    private boolean connectSmartDevices() {
-        return true;
-    }
-
-    private boolean login() {
-        return true;
-    }
-
-    private List<Recipe> favoriteRecipes() {
-        List<Recipe> recipeList = new ArrayList<>();
-        return recipeList;
-    }
+    
 }

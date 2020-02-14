@@ -46,4 +46,19 @@ class UserControllerTest {
         // This test should NOT call register
         // TODO: implement this test
     }
+
+    @Test
+    void testCanConnectSmartDevice() {
+
+    }
+
+    @Test
+    void testCanLogin() {
+
+    }
+
+    @Test
+    void testCanFavoriteRecipes() {
+        
+    }
 }
