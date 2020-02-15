@@ -56,7 +56,6 @@ public class RecipeController implements Controller {
 
     @Nullable
     public Recipe getRecipe(@Nonnull UUID uuid) {
-        // TODO: Should this be null or should this throw an exception?
         log.debug("RecipeController > getRecipe({})", uuid);
         return recipes.get(uuid);
     }
@@ -82,13 +81,10 @@ public class RecipeController implements Controller {
         }
 
         if (!recipe.isValid()) {
-            // TODO: replace with a real invalid object exception
-            // probably not one exception per object type though...
             throw new InvalidObjectException(invalidRecipe);
         }
 
         if (recipes.containsKey(id)) {
-            // TODO: replace with a real duplicate key exception
             throw new DuplicateKeyException(duplicateKey);
         }
 
@@ -100,18 +96,14 @@ public class RecipeController implements Controller {
         log.debug("RecipeController > updateRecipe(...)");
         final UUID id = recipe.getId();
         if (id == null) {
-            // TODO: replace with a real null key exception
             throw new NullKeyException(nullKey);
         }
 
         if (!recipe.isValid()) {
-            // TODO: replace with a real invalid object exception
-            // probably not one exception per object type though...
             throw new InvalidObjectException(invalidRecipe);
         }
 
         if (!recipes.containsKey(id)) {
-            // TODO: replace with a real recipe not found exception
             throw new KeyNotFoundException(keyNotFound);
         }
 
@@ -121,7 +113,6 @@ public class RecipeController implements Controller {
     public void deleteRecipe(@Nonnull UUID id) throws Exception {
         log.debug("RecipeController > deleteRecipe(...)");
         if (!recipes.containsKey(id)) {
-            // TODO: replace with a real recipe not found exception
             throw new KeyNotFoundException(keyNotFound);
         }
 
@@ -130,6 +121,8 @@ public class RecipeController implements Controller {
 
     public double updateAverageRating(@Nonnull Recipe recipe) {
         /*
+
+        TODO: Needs to be implemented by relies on other sections of the code
         listOfRatings = recipe.getRatings();
         for( Rating rating : listOfRatings){
             totalRating =+ rating.getRating()
@@ -152,14 +145,16 @@ public class RecipeController implements Controller {
         throw new Exception("This has not been implemented yet");
     }
 
-    private int computeTime(Recipe recipe) {
+    private int computeTime(@Nonnull Recipe recipe) {
+        // TODO: Needs to be implemented by relies on other sections of the code
         // List of Directions takes in the time property of each direction and checks its enum to
         // see if it is the enum of what i want to compute if it is then add it the total time.
         // Enum directionType
         return 0;
     }
 
-    public int getTotalTime(Recipe recipe) {
+    public int getTotalTime(@Nonnull Recipe recipe) {
+        // TODO: Needs to be implemented by relies on other sections of the code
         // This will also need a parameter enum also maybe should check if this already created for
         return computeTime(recipe);
     }

@@ -30,8 +30,6 @@ class RecipeControllerTest {
 
     @Test
     void testCanAddRecipe() throws Exception {
-        // This test should NOT call register
-        // TODO: implement this test.
         RecipeController recipeController = new RecipeController();
 
         final Recipe defaultRecipe1 = new Recipe();
@@ -48,8 +46,6 @@ class RecipeControllerTest {
 
     @Test
     void testCanReplaceRecipe() throws Exception {
-        // This test should NOT call register
-        // TODO: implement this test.
 
         RecipeController recipeController = new RecipeController();
 
@@ -73,17 +69,17 @@ class RecipeControllerTest {
 
     @Test
     void testCanDeleteRecipe() throws Exception {
-        // This test should NOT call register
-        // TODO: implement this test
 
         RecipeController recipeController = new RecipeController();
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Hot dog");
         recipeController.addRecipe(defaultRecipe1);
+
         final Recipe defaultRecipe2 = new Recipe();
         defaultRecipe2.setTitle("Cold");
         recipeController.addRecipe(defaultRecipe2);
         recipeController.deleteRecipe(defaultRecipe1.getId());
+
         for (Recipe recipe : recipeController.getRecipes()) {
             assertThat(recipe).isEqualTo(defaultRecipe2);
             assertThat(recipe).isNotEqualTo(defaultRecipe1);
