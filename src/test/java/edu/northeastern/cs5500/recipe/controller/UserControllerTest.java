@@ -7,27 +7,29 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import edu.northeastern.cs5500.recipe.model.User;
+import java.util.UUID;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 class UserControllerTest {
-    private User user;
 
     @Test
     void testRegisterCreatesUsers() {
-        this.user = new User();
-        UserController userController = new UserController(user);
-        assertThat(userController.getUser()).isEmpty();
+        UserController userController = new UserController();
+        assertThat(userController.getUsers()).isEmpty();
         userController.register();
-        assertThat(userController.getUser()).isNotEmpty();
+        assertThat(userController.getUsers()).isNotEmpty();
     }
+
+    private UserController userController;
 
     @Test
     void testRegisterCreatesValidUsers() {
         // TODO: Why is this test failing?
-        UserController userController = new UserController(user);
-        userController.register();
+        this.userController = new UserController();
+        this.userController.register();
 
-        for (User user : userController.getUser()) {
+        for (User user : userController.getUsers()) {
             assertWithMessage(user.getUserName()).that(user.isValid()).isTrue();
         }
     }
@@ -35,22 +37,73 @@ class UserControllerTest {
     @Test
     void testCanAddUser() {
         // This test should NOT call register
-        // TODO: implement this test.
-        UserController userController = new UserController(user);
-        
+
+        User user = new User();
+        try {
+            UUID id = this.userController.addUser(user);
+            assertThat(this.userController.getUsers().contains(user));
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
     void testCanReplaceUser() {
         // This test should NOT call register
-        // TODO: implement this test.
 
+        try {
+            // Add in new user
+            User originalUser = new User();
+            UUID id = this.userController.addUser(originalUser);
+
+            // Replace user
+            User newUser = new User();
+            newUser.setId(id);
+            this.userController.updateUser(newUser);
+
+            // Test
+            boolean find = false;
+            for (User user : this.userController.getUsers()) {
+                if (user.getId() == id) {
+                    find = true;
+                    Assert.assertEquals(user, newUser);
+                }
+            }
+            if (!find) {
+                Assert.fail();
+            }
+
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
     void testCanDeleteUser() {
         // This test should NOT call register
-        // TODO: implement this test
 
+        try {
+            // Add new user
+            User newUser = new User();
+            UUID id = this.userController.addUser(newUser);
+
+            // Delete that user
+            this.userController.deleteUser(id);
+
+            // Test
+            boolean find = false;
+            for (User user : this.userController.getUsers()) {
+                if (user.getId() == id) {
+                    find = true;
+                    break;
+                }
+            }
+            if (find) {
+                Assert.fail();
+            }
+
+        } catch (Exception e) {
+
+        }
     }
 }

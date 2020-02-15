@@ -1,12 +1,11 @@
 package edu.northeastern.cs5500.recipe.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
-
 import lombok.Data;
 
 @Data
@@ -20,7 +19,7 @@ public class User {
 
     /**
      * Construct a User class
-     * 
+     *
      * @param id - the unique id of current user
      * @param userName - user's user name
      * @param email - user's registered email
@@ -38,45 +37,65 @@ public class User {
     }
 
     /**
-    * Rate the recipe.
-    *
-    * @param recipe - the recipe to be rated
-    * @return a new Rating for the recipe
-    */
+     * Rate the recipe.
+     *
+     * @param recipe - the recipe to be rated
+     * @return a new Rating for the recipe
+     */
     // private Rating rateRecipe(Recipe recipe) {
 
     // }
 
     /**
-    * Connect the smart devices.
-    *
-    * @return whether the device is connected
-    */
+     * Connect the smart devices.
+     *
+     * @return whether the device is connected
+     */
     private boolean connectSmartDevices() {
         return true;
     }
 
     /**
-    * Favorite the recipe.
-    * @param favoriteRecipe - user's new favorite recipe
-    */
+     * Favorite the recipe.
+     *
+     * @param favoriteRecipe - user's new favorite recipe
+     */
     private void favoriteRecipe(Recipe favoriteRecipe) {
         this.favoriteRecipes.add(favoriteRecipe);
     }
 
-    /**
-    * Get the unique id of the user.
-    */
+    /** Get the unique id of the user. */
     public UUID getId() {
         return this.id;
     }
 
-    /**
-    * Set the unique id of the user.
-    */
+    /** Get the user name of the user. */
+    public String getUserName() {
+        return this.userName;
+    }
+
+    /** Get the email of the user. */
+    public String getEmail() {
+        return this.email;
+    }
+
+    /** Set the unique id of the user. */
     public void setId(UUID id) {
         this.id = id;
     }
 
-    
+    /** Set the user name of the user. */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    /** Set the email of the user. */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /** Get the password of the user. */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

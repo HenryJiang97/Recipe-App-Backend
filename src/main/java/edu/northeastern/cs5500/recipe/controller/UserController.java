@@ -1,7 +1,6 @@
 package edu.northeastern.cs5500.recipe.controller;
 
 import edu.northeastern.cs5500.recipe.model.User;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,13 +18,11 @@ public class UserController implements Controller {
     private Map<UUID, User> users;
 
     @Inject
-    UserController(User user) {
+    UserController() {
         this.users = new HashMap<>();
     }
 
-    /**
-    * Initialize the database and add in default user samples.
-    */
+    /** Initialize the database and add in default user samples. */
     @Override
     public void register() {
         log.info("UserController > register");
@@ -50,10 +47,10 @@ public class UserController implements Controller {
     }
 
     /**
-    * Get a specific user from the database.
-    *
-    * @param uuid - the user id of the user
-    */
+     * Get a specific user from the database.
+     *
+     * @param uuid - the user id of the user
+     */
     @Nullable
     public User getUser(@Nonnull UUID uuid) {
         // TODO: Should this be null or should this throw an exception?
@@ -61,9 +58,7 @@ public class UserController implements Controller {
         return users.get(uuid);
     }
 
-    /**
-    * Get the entire list of users from the database.
-    */
+    /** Get the entire list of users from the database. */
     @Nonnull
     public Collection<User> getUsers() {
         log.debug("UserController > getUser()");
@@ -74,11 +69,11 @@ public class UserController implements Controller {
     }
 
     /**
-    * Add new user to the database.
-    *
-    * @param user - the user needed to be added to the database
-    * @return the UUID generated for the new user
-    */
+     * Add new user to the database.
+     *
+     * @param user - the user needed to be added to the database
+     * @return the UUID generated for the new user
+     */
     @Nonnull
     public UUID addUser(@Nonnull User user) throws Exception {
         log.debug("UserController > addUser(...)");
@@ -100,10 +95,10 @@ public class UserController implements Controller {
     }
 
     /**
-    * Update the user to the database.
-    *
-    * @param user - the user needed to be added
-    */
+     * Update the user to the database.
+     *
+     * @param user - the user needed to be added
+     */
     public void updateUser(@Nonnull User user) throws Exception {
         log.debug("UserController > updateUser(...)");
         final UUID id = user.getId();
@@ -127,10 +122,10 @@ public class UserController implements Controller {
     }
 
     /**
-    * Delete the user from the database.
-    *
-    * @param id - the unique id of the user needed to be deleted
-    */
+     * Delete the user from the database.
+     *
+     * @param id - the unique id of the user needed to be deleted
+     */
     public void deleteUser(@Nonnull UUID id) throws Exception {
         log.debug("UserController > deleteUser(...)");
         if (!users.containsKey(id)) {
