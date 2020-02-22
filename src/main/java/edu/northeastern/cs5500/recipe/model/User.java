@@ -20,10 +20,6 @@ public class User {
     /**
      * Construct a User class
      *
-     * @param id - the unique id of current user
-     * @param userName - user's user name
-     * @param email - user's registered email
-     * @param password - user's password
      */
     public User() {
         this.favoriteRecipes = new ArrayList<>();
