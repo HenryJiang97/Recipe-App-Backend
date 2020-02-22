@@ -1,6 +1,8 @@
 package edu.northeastern.cs5500.recipe.controller;
 
 import edu.northeastern.cs5500.recipe.model.User;
+import edu.northeastern.cs5500.recipe.model.Recipe;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -135,4 +137,37 @@ public class UserController implements Controller {
 
         users.remove(id);
     }
+
+
+
+    /**
+     * Rate the recipe.
+     *
+     * @param recipe - the recipe to be rated
+     * @return a new Rating for the recipe
+     */
+    // TODO: Implement after Rating class has been created
+    // private Rating rateRecipe(User user, Recipe recipe) {
+
+    // }
+
+    /**
+     * Connect the smart devices.
+     *
+     * @return whether the device is connected
+     */
+    private boolean connectSmartDevices(User user) {
+        return true;
+    }
+
+    /**
+     * Favorite the recipe.
+     *
+     * @param favoriteRecipe - user's new favorite recipe
+     */
+    private void favoriteRecipe(User user, Recipe favoriteRecipe) {
+        user.addFavoriteRecipe(favoriteRecipe);
+    }
+
+    
 }

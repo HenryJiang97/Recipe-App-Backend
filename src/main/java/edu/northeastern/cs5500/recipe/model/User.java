@@ -36,34 +36,6 @@ public class User {
         return userName != null && !userName.isEmpty();
     }
 
-    /**
-     * Rate the recipe.
-     *
-     * @param recipe - the recipe to be rated
-     * @return a new Rating for the recipe
-     */
-    // private Rating rateRecipe(Recipe recipe) {
-
-    // }
-
-    /**
-     * Connect the smart devices.
-     *
-     * @return whether the device is connected
-     */
-    private boolean connectSmartDevices() {
-        return true;
-    }
-
-    /**
-     * Favorite the recipe.
-     *
-     * @param favoriteRecipe - user's new favorite recipe
-     */
-    private void favoriteRecipe(Recipe favoriteRecipe) {
-        this.favoriteRecipes.add(favoriteRecipe);
-    }
-
     /** Get the unique id of the user. */
     public UUID getId() {
         return this.id;
@@ -97,5 +69,10 @@ public class User {
     /** Get the password of the user. */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /** Add favorite recipe to the favoriteRecipe list of the user. */
+    public void addFavoriteRecipe(Recipe recipe) {
+        this.favoriteRecipes.add(recipe);
     }
 }
