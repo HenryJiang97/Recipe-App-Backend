@@ -1,11 +1,10 @@
 package edu.northeastern.cs5500.recipe.controller;
 
-import edu.northeastern.cs5500.recipe.model.Direction;
-import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.Exceptions.DirectionNotFoundException;
 import edu.northeastern.cs5500.recipe.Exceptions.DuplicateKeyException;
 import edu.northeastern.cs5500.recipe.Exceptions.NullKeyException;
-
+import edu.northeastern.cs5500.recipe.model.Direction;
+import edu.northeastern.cs5500.recipe.model.Recipe;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -130,8 +129,6 @@ public class DirectionController implements Controller {
         directions.remove(id);
     }
 
-
-
     /**
      * Change the serving size
      *
@@ -142,14 +139,13 @@ public class DirectionController implements Controller {
 
     // }
 
-
     /**
      * Change temperature according to user preference
      *
      * @param servingSize - the new serving size to be served
      */
-    public Recipe changeTemperatureToUserPreference(Map<String, String> preferences) throws Exception {
+    public Recipe changeTemperatureToUserPreference(Map<String, String> preferences)
+            throws Exception {
         throw new Exception("This has not been implemented yet");
     }
-    
 }

@@ -17,10 +17,7 @@ public class User {
     private List<Recipe> favoriteRecipes;
     private Map<String, String> userPreferences;
 
-    /**
-     * Construct a User class
-     *
-     */
+    /** Construct a User class */
     public User() {
         this.favoriteRecipes = new ArrayList<>();
         this.userPreferences = new HashMap<>();

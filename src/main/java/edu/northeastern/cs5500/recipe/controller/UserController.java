@@ -1,12 +1,11 @@
 package edu.northeastern.cs5500.recipe.controller;
 
-import edu.northeastern.cs5500.recipe.model.User;
-import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.Exceptions.DuplicateKeyException;
 import edu.northeastern.cs5500.recipe.Exceptions.InvalidUserException;
-import edu.northeastern.cs5500.recipe.Exceptions.UserNotFoundException;
 import edu.northeastern.cs5500.recipe.Exceptions.NullKeyException;
-
+import edu.northeastern.cs5500.recipe.Exceptions.UserNotFoundException;
+import edu.northeastern.cs5500.recipe.model.Recipe;
+import edu.northeastern.cs5500.recipe.model.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -135,8 +134,6 @@ public class UserController implements Controller {
         users.remove(id);
     }
 
-
-
     /**
      * Rate the recipe.
      *
@@ -165,6 +162,4 @@ public class UserController implements Controller {
     private void favoriteRecipe(User user, Recipe favoriteRecipe) {
         user.addFavoriteRecipe(favoriteRecipe);
     }
-
-    
 }
