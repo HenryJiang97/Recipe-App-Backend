@@ -1,5 +1,10 @@
 package edu.northeastern.cs5500.recipe.controller;
 
+import edu.northeastern.cs5500.recipe.Exceptions.DuplicateKeyException;
+import edu.northeastern.cs5500.recipe.Exceptions.InvalidUserException;
+import edu.northeastern.cs5500.recipe.Exceptions.NullKeyException;
+import edu.northeastern.cs5500.recipe.Exceptions.UserNotFoundException;
+import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.User;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,9 +58,8 @@ public class UserController implements Controller {
      */
     @Nullable
     public User getUser(@Nonnull UUID uuid) {
-        // TODO: Should this be null or should this throw an exception?
         log.debug("UserController > getUser({})", uuid);
-        return users.get(uuid);
+        return users.containsKey(uuid) ? users.get(uuid) : null;
     }
 
     /** Get the entire list of users from the database. */
@@ -86,8 +90,7 @@ public class UserController implements Controller {
         }
 
         if (users.containsKey(id)) {
-            // TODO: replace with a real duplicate key exception
-            throw new Exception("DuplicateKeyException");
+            throw new DuplicateKeyException("DuplicateKeyException");
         }
 
         users.put(id, user);
@@ -103,19 +106,15 @@ public class UserController implements Controller {
         log.debug("UserController > updateUser(...)");
         final UUID id = user.getId();
         if (id == null) {
-            // TODO: replace with a real null key exception
-            throw new Exception("NullKeyException");
+            throw new NullKeyException("NullKeyException");
         }
 
         if (!user.isValid()) {
-            // TODO: replace with a real invalid object exception
-            // probably not one exception per object type though...
-            throw new Exception("InvalidUserException");
+            throw new InvalidUserException("InvalidUserException");
         }
 
         if (!users.containsKey(id)) {
-            // TODO: replace with a real user not found exception
-            throw new Exception("KeyNotFoundException");
+            throw new UserNotFoundException("KeyNotFoundException");
         }
 
         users.put(id, user);
@@ -129,10 +128,38 @@ public class UserController implements Controller {
     public void deleteUser(@Nonnull UUID id) throws Exception {
         log.debug("UserController > deleteUser(...)");
         if (!users.containsKey(id)) {
-            // TODO: replace with a real user not found exception
-            throw new Exception("KeyNotFoundException");
+            throw new UserNotFoundException("KeyNotFoundException");
         }
 
         users.remove(id);
+    }
+
+    /**
+     * Rate the recipe.
+     *
+     * @param recipe - the recipe to be rated
+     * @return a new Rating for the recipe
+     */
+    // TODO: Implement after Rating class has been created
+    // private Rating rateRecipe(User user, Recipe recipe) {
+
+    // }
+
+    /**
+     * Connect the smart devices.
+     *
+     * @return whether the device is connected
+     */
+    private boolean connectSmartDevices(User user) {
+        return true;
+    }
+
+    /**
+     * Favorite the recipe.
+     *
+     * @param favoriteRecipe - user's new favorite recipe
+     */
+    private void favoriteRecipe(User user, Recipe favoriteRecipe) {
+        user.addFavoriteRecipe(favoriteRecipe);
     }
 }

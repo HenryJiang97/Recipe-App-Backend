@@ -17,14 +17,7 @@ public class User {
     private List<Recipe> favoriteRecipes;
     private Map<String, String> userPreferences;
 
-    /**
-     * Construct a User class
-     *
-     * @param id - the unique id of current user
-     * @param userName - user's user name
-     * @param email - user's registered email
-     * @param password - user's password
-     */
+    /** Construct a User class */
     public User() {
         this.favoriteRecipes = new ArrayList<>();
         this.userPreferences = new HashMap<>();
@@ -34,34 +27,6 @@ public class User {
     @JsonIgnore
     public boolean isValid() {
         return userName != null && !userName.isEmpty();
-    }
-
-    /**
-     * Rate the recipe.
-     *
-     * @param recipe - the recipe to be rated
-     * @return a new Rating for the recipe
-     */
-    // private Rating rateRecipe(Recipe recipe) {
-
-    // }
-
-    /**
-     * Connect the smart devices.
-     *
-     * @return whether the device is connected
-     */
-    private boolean connectSmartDevices() {
-        return true;
-    }
-
-    /**
-     * Favorite the recipe.
-     *
-     * @param favoriteRecipe - user's new favorite recipe
-     */
-    private void favoriteRecipe(Recipe favoriteRecipe) {
-        this.favoriteRecipes.add(favoriteRecipe);
     }
 
     /** Get the unique id of the user. */
@@ -97,5 +62,10 @@ public class User {
     /** Get the password of the user. */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /** Add favorite recipe to the favoriteRecipe list of the user. */
+    public void addFavoriteRecipe(Recipe recipe) {
+        this.favoriteRecipes.add(recipe);
     }
 }
