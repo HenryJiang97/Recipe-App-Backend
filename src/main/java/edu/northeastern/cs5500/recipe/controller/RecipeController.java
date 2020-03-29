@@ -122,7 +122,7 @@ public class RecipeController implements Controller {
     public double updateAverageRating(@Nonnull Recipe recipe) {
         /*
 
-        TODO: Needs to be implemented by relies on other sections of the code
+        TODO: Needs to be implemented by relies on direction sections of the code
         listOfRatings = recipe.getRatings();
         for( Rating rating : listOfRatings){
             totalRating =+ rating.getRating()
@@ -146,7 +146,7 @@ public class RecipeController implements Controller {
     }
 
     private int computeTime(@Nonnull Recipe recipe) {
-        // TODO: Needs to be implemented by relies on other sections of the code
+        // TODO: Needs to be implemented by relies on direction section of the code
         // List of Directions takes in the time property of each direction and checks its enum to
         // see if it is the enum of what i want to compute if it is then add it the total time.
         // Enum directionType
@@ -154,7 +154,7 @@ public class RecipeController implements Controller {
     }
 
     public int getTotalTime(@Nonnull Recipe recipe) {
-        // TODO: Needs to be implemented by relies on other sections of the code
+        // TODO: Needs to be implemented by relies on direction sections of the code
         // This will also need a parameter enum also maybe should check if this already created for
         return computeTime(recipe);
     }
