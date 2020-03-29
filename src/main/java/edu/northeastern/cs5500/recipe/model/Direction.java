@@ -1,13 +1,14 @@
 package edu.northeastern.cs5500.recipe.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import java.util.UUID;
 import lombok.Data;
 
 @Data
 public class Direction {
     /** Define the enum for direction types */
-    enum DirecitonTypes {
+    public enum DirectionTypes {
         PREP,
         WAIT,
         COOK;
@@ -16,10 +17,10 @@ public class Direction {
     private UUID id;
     private String name;
     // TODO: Ingredients
-    // private List<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
     private int time;
     private int temp;
-    private DirecitonTypes direcitonType;
+    private DirectionTypes directionType;
 
     /** Construct a User class */
     public Direction() {}
@@ -53,8 +54,8 @@ public class Direction {
     }
 
     /** Get the temp of the direction. */
-    public DirecitonTypes getDirectionType() {
-        return this.direcitonType;
+    public DirectionTypes getDirectionType() {
+        return this.directionType;
     }
 
     /** Set the id of the direction. */
@@ -80,7 +81,7 @@ public class Direction {
     // TODO: Define setIngredients class
 
     /** Set the unique id of the user. */
-    public void setDirectionType(DirecitonTypes direcitonType) {
-        this.direcitonType = direcitonType;
+    public void setDirectionType(DirectionTypes direcitonType) {
+        this.directionType = direcitonType;
     }
 }
