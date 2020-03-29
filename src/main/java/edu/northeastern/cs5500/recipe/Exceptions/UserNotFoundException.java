@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.recipe.Exceptions;
+package edu.northeastern.cs5500.recipe.exceptions;
 
 public class UserNotFoundException extends Exception {
 

@@ -1,7 +1,5 @@
 package edu.northeastern.cs5500.recipe.model.Style;
 
-import edu.northeastern.cs5500.recipe.model.Style.EasternStyle;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
