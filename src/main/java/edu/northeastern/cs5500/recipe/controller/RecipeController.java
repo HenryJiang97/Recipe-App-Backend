@@ -3,11 +3,10 @@ package edu.northeastern.cs5500.recipe.controller;
 import edu.northeastern.cs5500.recipe.exceptions.DuplicateKeyException;
 import edu.northeastern.cs5500.recipe.exceptions.KeyNotFoundException;
 import edu.northeastern.cs5500.recipe.exceptions.NullKeyException;
-import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.Direction;
 import edu.northeastern.cs5500.recipe.model.Rating;
+import edu.northeastern.cs5500.recipe.model.Recipe;
 import java.io.InvalidObjectException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import com.fasterxml.jackson.databind.node.NullNode;
 import lombok.extern.slf4j.Slf4j;
 
 @Singleton
@@ -35,9 +33,7 @@ public class RecipeController implements Controller {
     RecipeController() {
         recipes = new HashMap<>();
     }
-    /**
-     * Creates default recipes and puts them in database.
-     */
+    /** Creates default recipes and puts them in database. */
     @Override
     public void register() {
         log.info("RecipeController > register");
@@ -59,17 +55,13 @@ public class RecipeController implements Controller {
             e.printStackTrace();
         }
     }
-    /**
-     * Gets recipe from database based on UUID.
-     */
+    /** Gets recipe from database based on UUID. */
     @Nullable
     public Recipe getRecipe(@Nonnull UUID uuid) {
         log.debug("RecipeController > getRecipe({})", uuid);
         return recipes.get(uuid);
     }
-    /**
-     * Gets all recipes from database.
-     */
+    /** Gets all recipes from database. */
     @Nonnull
     public Collection<Recipe> getRecipes() {
         log.debug("RecipeController > getRecipes()");
@@ -80,10 +72,11 @@ public class RecipeController implements Controller {
     }
     /**
      * Adds a recipe to the database and makes sure that recipes times are updated.
+     *
      * @param recipe - A new recipe to be added.
      * @return - The recipe ID of the recipe added.
-     * @throws Exception - Invalid Recipe if recipe is not valid or
-     * DuplicateKeyException if recipe somehow has duplicate UUID
+     * @throws Exception - Invalid Recipe if recipe is not valid or DuplicateKeyException if recipe
+     *     somehow has duplicate UUID
      */
     @Nonnull
     public UUID addRecipe(@Nonnull Recipe recipe) throws Exception {
@@ -109,8 +102,9 @@ public class RecipeController implements Controller {
     }
     /**
      * Updates recipe based on UUID
+     *
      * @param recipe - Takes new recipe info to update recipe too.
-     * @throws Exception - InvalidObjectException If recipe is not valid or 
+     * @throws Exception - InvalidObjectException If recipe is not valid or
      * @throws KeyNotFoundException - If key is not vound
      */
     public void updateRecipe(@Nonnull Recipe recipe) throws Exception {
@@ -131,7 +125,8 @@ public class RecipeController implements Controller {
         recipes.put(id, recipe);
     }
     /**
-     * Deletes a recipe 
+     * Deletes a recipe
+     *
      * @throws KeyNotFoundException - If recipe UUID is not found
      */
     public void deleteRecipe(@Nonnull UUID id) throws Exception {
@@ -143,8 +138,9 @@ public class RecipeController implements Controller {
         recipes.remove(id);
     }
     /**
-     * Updates average rating for a recipe. Sets average rating in recipe body 
-     * but also returns new average rating.
+     * Updates average rating for a recipe. Sets average rating in recipe body but also returns new
+     * average rating.
+     *
      * @param recipe - Recipe average rating to be updated
      * @param rating - New rating to to add to recipe's average
      * @return - New Average rating
@@ -154,56 +150,56 @@ public class RecipeController implements Controller {
         int numberRatings = recipe.getRatings().size();
         int averageRating = recipe.getAverageRating();
         int newAverageRating = 0;
-        if(averageRating == 0){
+        if (averageRating == 0) {
             newAverageRating = rating.getRating();
-        } else{
-            newAverageRating =(averageRating*numberRatings+ rating.getRating())/(numberRatings+1)
+        } else {
+            newAverageRating =
+                    (averageRating * numberRatings + rating.getRating()) / (numberRatings + 1);
         }
         recipe.setAverageRating(newAverageRating);
         return newAverageRating;
-            
     }
     /**
      * This doesnt do anything
+     *
      * @param preferences
      * @return
      * @throws Exception
      */
-
     public Recipe changeRecipeToUserPreferences(Map<String, String> preferences) throws Exception {
         throw new Exception("This has not been implemented yet");
     }
     /**
-     * Computes  time for recipe and updates those fields in recipe through
-     * setting.
+     * Computes time for recipe and updates those fields in recipe through setting.
+     *
      * @param recipe - Recipe times to be computed
      * @return A map of key "COOK" cookTime "WAIT" waitTime and "PREP" prepTime
      */
-
     private Map<String, Integer> computeTime(@Nonnull Recipe recipe) {
-       int cookTime = 0;
-       int waitTime = 0;
-       int prepTime = 0;
+        int cookTime = 0;
+        int waitTime = 0;
+        int prepTime = 0;
+        Map<String, Integer> recipeTimeMap = new HashMap<String, Integer>();
+        if (recipe.getDirections() != null) {
 
-        for(Direction curDirection: recipe.getDirections()){
-            switch(curDirection.getDirectionType()){
-                case COOK:
-                    cookTime = cookTime + curDirection.getTime();
-                    break;
-                case PREP:
-                    prepTime = prepTime + curDirection.getTime();
-                    break;
-                case WAIT:
-                    waitTime = prepTime + curDirection.getTemp();
-                    break;
-                default:
-                    log.debug("computeTime some how ended in non enum case");
-                    break;
-
+            for (Direction curDirection : recipe.getDirections()) {
+                switch (curDirection.getDirectionType()) {
+                    case COOK:
+                        cookTime = cookTime + curDirection.getTime();
+                        break;
+                    case PREP:
+                        prepTime = prepTime + curDirection.getTime();
+                        break;
+                    case WAIT:
+                        waitTime = prepTime + curDirection.getTemp();
+                        break;
+                    default:
+                        log.debug("computeTime some how ended in non enum case");
+                        break;
+                }
             }
-
         }
-        Map<String, Integer> recipeTimeMap = new Map<String, Integer>();
+
         recipeTimeMap.put("COOK", cookTime);
         recipeTimeMap.put("WAIT", waitTime);
         recipeTimeMap.put("PREP", prepTime);

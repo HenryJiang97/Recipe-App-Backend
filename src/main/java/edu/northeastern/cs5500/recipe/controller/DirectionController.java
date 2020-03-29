@@ -128,12 +128,6 @@ public class DirectionController implements Controller {
 
         directions.remove(id);
     }
-    public int getDirectionTime(Direction direction){
-        return direction.getTime();
-    }
-    public DirectionTypes getDirectionType(Direction direction){
-        return direction.getDirectionType();
-    }
 
     /**
      * Change the serving size

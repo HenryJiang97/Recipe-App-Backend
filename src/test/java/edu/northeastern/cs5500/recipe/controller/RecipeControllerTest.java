@@ -34,6 +34,10 @@ class RecipeControllerTest {
 
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Hot dog");
+        defaultRecipe1.setCookTime(0);
+        defaultRecipe1.setWaitTime(0);
+        defaultRecipe1.setPrepTime(0);
+        defaultRecipe1.setTotalTime(0);
         recipeController.addRecipe(defaultRecipe1);
 
         final Recipe defaultRecipe2 = new Recipe();

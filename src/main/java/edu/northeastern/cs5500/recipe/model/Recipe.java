@@ -1,11 +1,10 @@
 package edu.northeastern.cs5500.recipe.model;
 
-import edu.northeastern.cs5500.recipe.model.Style.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.northeastern.cs5500.recipe.model.Style.*;
 import java.util.List;
 import java.util.UUID;
 import lombok.Data;
-
 
 @Data
 public class Recipe {
