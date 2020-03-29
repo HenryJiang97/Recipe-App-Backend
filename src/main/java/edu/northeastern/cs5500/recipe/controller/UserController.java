@@ -1,9 +1,9 @@
 package edu.northeastern.cs5500.recipe.controller;
 
-import edu.northeastern.cs5500.recipe.Exceptions.DuplicateKeyException;
-import edu.northeastern.cs5500.recipe.Exceptions.InvalidUserException;
-import edu.northeastern.cs5500.recipe.Exceptions.NullKeyException;
-import edu.northeastern.cs5500.recipe.Exceptions.UserNotFoundException;
+import edu.northeastern.cs5500.recipe.exceptions.DuplicateKeyException;
+import edu.northeastern.cs5500.recipe.exceptions.InvalidUserException;
+import edu.northeastern.cs5500.recipe.exceptions.NullKeyException;
+import edu.northeastern.cs5500.recipe.exceptions.UserNotFoundException;
 import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.User;
 import java.util.ArrayList;

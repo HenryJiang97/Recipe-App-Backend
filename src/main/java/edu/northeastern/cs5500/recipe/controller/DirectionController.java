@@ -1,8 +1,8 @@
 package edu.northeastern.cs5500.recipe.controller;
 
-import edu.northeastern.cs5500.recipe.Exceptions.DirectionNotFoundException;
-import edu.northeastern.cs5500.recipe.Exceptions.DuplicateKeyException;
-import edu.northeastern.cs5500.recipe.Exceptions.NullKeyException;
+import edu.northeastern.cs5500.recipe.exceptions.DirectionNotFoundException;
+import edu.northeastern.cs5500.recipe.exceptions.DuplicateKeyException;
+import edu.northeastern.cs5500.recipe.exceptions.NullKeyException;
 import edu.northeastern.cs5500.recipe.model.Direction;
 import edu.northeastern.cs5500.recipe.model.Recipe;
 import java.util.ArrayList;
@@ -127,6 +127,12 @@ public class DirectionController implements Controller {
         }
 
         directions.remove(id);
+    }
+    public int getDirectionTime(Direction direction){
+        return direction.getTime();
+    }
+    public DirectionTypes getDirectionType(Direction direction){
+        return direction.getDirectionType();
     }
 
     /**
