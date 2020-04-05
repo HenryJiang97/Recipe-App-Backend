@@ -41,7 +41,7 @@ public class RecipeController implements Controller {
         // TODO: This should be in a database
         log.info("RecipeController > register > adding default recipes");
         final Recipe defaultRecipe1 = new Recipe();
-        defaultRecipe1.setTitle("Hot dog");
+        defaultRecipe1.setTitle("Chicken wings");
 
         final Recipe defaultRecipe2 = new Recipe();
         defaultRecipe2.setTitle("A steak");
