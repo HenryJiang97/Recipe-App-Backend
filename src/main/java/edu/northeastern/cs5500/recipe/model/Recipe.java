@@ -5,10 +5,11 @@ import edu.northeastern.cs5500.recipe.model.Style.*;
 import java.util.List;
 import java.util.UUID;
 import lombok.Data;
+import org.bson.types.ObjectId;
 
 @Data
-public class Recipe {
-    private UUID id;
+public class Recipe implements Model {
+    private ObjectId id;
     private String title;
     private String description;
     private Style style;

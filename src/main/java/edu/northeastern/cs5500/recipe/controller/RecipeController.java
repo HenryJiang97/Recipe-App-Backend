@@ -2,26 +2,25 @@ package edu.northeastern.cs5500.recipe.controller;
 
 import edu.northeastern.cs5500.recipe.exceptions.DuplicateKeyException;
 import edu.northeastern.cs5500.recipe.exceptions.KeyNotFoundException;
-import edu.northeastern.cs5500.recipe.exceptions.NullKeyException;
 import edu.northeastern.cs5500.recipe.model.Direction;
 import edu.northeastern.cs5500.recipe.model.Rating;
 import edu.northeastern.cs5500.recipe.model.Recipe;
+import edu.northeastern.cs5500.recipe.repository.GenericRepository;
 import java.io.InvalidObjectException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 
 @Singleton
 @Slf4j
-public class RecipeController implements Controller {
-    private Map<UUID, Recipe> recipes;
+public class RecipeController {
+    private final GenericRepository<Recipe> recipes;
     protected static final String invalidRecipe =
             "Recipe is not valid. Please replace with valid recipe";
     protected static final String duplicateKey =
@@ -30,16 +29,16 @@ public class RecipeController implements Controller {
     protected static final String keyNotFound = "Key was not found please enter a real key!";
 
     @Inject
-    RecipeController() {
-        recipes = new HashMap<>();
-    }
-    /** Creates default recipes and puts them in database. */
-    @Override
-    public void register() {
-        log.info("RecipeController > register");
+    RecipeController(GenericRepository<Recipe> recipeRepository) {
+        recipes = recipeRepository;
 
-        // TODO: This should be in a database
-        log.info("RecipeController > register > adding default recipes");
+        log.info("RecipeController > construct");
+
+        if (recipes.count() > 0) {
+            return;
+        }
+
+        /** Creates default recipes and puts them in database. */
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Chicken wings");
 
@@ -51,13 +50,13 @@ public class RecipeController implements Controller {
             addRecipe(defaultRecipe1);
             addRecipe(defaultRecipe2);
         } catch (Exception e) {
-            log.error("RecipeController > register > adding default recipes > failure?");
+            log.error("RecipeController > construct > adding default recipes > failure?");
             e.printStackTrace();
         }
     }
     /** Gets recipe from database based on UUID. */
     @Nullable
-    public Recipe getRecipe(@Nonnull UUID uuid) {
+    public Recipe getRecipe(@Nonnull ObjectId uuid) {
         log.debug("RecipeController > getRecipe({})", uuid);
         return recipes.get(uuid);
     }
@@ -65,10 +64,7 @@ public class RecipeController implements Controller {
     @Nonnull
     public Collection<Recipe> getRecipes() {
         log.debug("RecipeController > getRecipes()");
-        if (recipes.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return recipes.values();
+        return recipes.getAll();
     }
     /**
      * Adds a recipe to the database and makes sure that recipes times are updated.
@@ -79,26 +75,20 @@ public class RecipeController implements Controller {
      *     somehow has duplicate UUID
      */
     @Nonnull
-    public UUID addRecipe(@Nonnull Recipe recipe) throws Exception {
+    public Recipe addRecipe(@Nonnull Recipe recipe) throws Exception {
         log.debug("RecipeController > addRecipe(...)");
-        final UUID id;
-        if (recipe.getId() == null) {
-            id = UUID.randomUUID();
-            recipe.setId(id);
-        } else {
-            id = recipe.getId();
-        }
 
         if (!recipe.isValid()) {
             throw new InvalidObjectException(invalidRecipe);
         }
 
-        if (recipes.containsKey(id)) {
+        ObjectId id = recipe.getId();
+
+        if (id != null && recipes.get(id) != null) {
             throw new DuplicateKeyException(duplicateKey);
         }
         this.computeTime(recipe);
-        recipes.put(id, recipe);
-        return id;
+        return recipes.add(recipe);
     }
     /**
      * Updates recipe based on UUID
@@ -109,33 +99,16 @@ public class RecipeController implements Controller {
      */
     public void updateRecipe(@Nonnull Recipe recipe) throws Exception {
         log.debug("RecipeController > updateRecipe(...)");
-        final UUID id = recipe.getId();
-        if (id == null) {
-            throw new NullKeyException(nullKey);
-        }
-
-        if (!recipe.isValid()) {
-            throw new InvalidObjectException(invalidRecipe);
-        }
-
-        if (!recipes.containsKey(id)) {
-            throw new KeyNotFoundException(keyNotFound);
-        }
         this.computeTime(recipe);
-        recipes.put(id, recipe);
+        recipes.update(recipe);
     }
     /**
      * Deletes a recipe
      *
      * @throws KeyNotFoundException - If recipe UUID is not found
      */
-    public void deleteRecipe(@Nonnull UUID id) throws Exception {
-        log.debug("RecipeController > deleteRecipe(...)");
-        if (!recipes.containsKey(id)) {
-            throw new KeyNotFoundException(keyNotFound);
-        }
-
-        recipes.remove(id);
+    public void deleteRecipe(@Nonnull ObjectId id) throws Exception {
+        recipes.delete(id);
     }
     /**
      * Updates average rating for a recipe. Sets average rating in recipe body but also returns new

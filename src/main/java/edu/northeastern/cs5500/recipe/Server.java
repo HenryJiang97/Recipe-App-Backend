@@ -4,15 +4,20 @@
 package edu.northeastern.cs5500.recipe;
 
 import dagger.Component;
-import edu.northeastern.cs5500.recipe.controller.Controller;
-import edu.northeastern.cs5500.recipe.controller.ControllerModule;
+import edu.northeastern.cs5500.recipe.model.ModelModule;
+import edu.northeastern.cs5500.recipe.repository.RepositoryModule;
 import edu.northeastern.cs5500.recipe.view.View;
 import edu.northeastern.cs5500.recipe.view.ViewModule;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-@Component(modules = {ControllerModule.class, ViewModule.class})
+@Component(
+        modules = {
+            ViewModule.class,
+            ModelModule.class,
+            RepositoryModule.class,
+        })
 @Singleton
 interface ServerComponent {
     public Server server();
@@ -20,18 +25,12 @@ interface ServerComponent {
 
 public class Server {
 
-    @Inject Set<Controller> controllers;
-
     @Inject Set<View> views;
 
     @Inject
     Server() {}
 
     void start() {
-        for (Controller controller : controllers) {
-            controller.register();
-        }
-
         for (View view : views) {
             view.register();
         }

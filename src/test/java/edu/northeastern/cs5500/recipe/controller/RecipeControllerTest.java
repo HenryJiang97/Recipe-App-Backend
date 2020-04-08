@@ -7,21 +7,19 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import edu.northeastern.cs5500.recipe.model.Recipe;
+import edu.northeastern.cs5500.recipe.repository.InMemoryRepository;
 import org.junit.jupiter.api.Test;
 
 class RecipeControllerTest {
     @Test
     void testRegisterCreatesRecipes() {
-        RecipeController recipeController = new RecipeController();
-        assertThat(recipeController.getRecipes()).isEmpty();
-        recipeController.register();
+        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
         assertThat(recipeController.getRecipes()).isNotEmpty();
     }
 
     @Test
     void testRegisterCreatesValidRecipes() {
-        RecipeController recipeController = new RecipeController();
-        recipeController.register();
+        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
 
         for (Recipe recipe : recipeController.getRecipes()) {
             assertWithMessage(recipe.getTitle()).that(recipe.isValid()).isTrue();
@@ -30,7 +28,7 @@ class RecipeControllerTest {
 
     @Test
     void testCanAddRecipe() throws Exception {
-        RecipeController recipeController = new RecipeController();
+        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
 
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Hot dog");
@@ -42,16 +40,15 @@ class RecipeControllerTest {
 
         final Recipe defaultRecipe2 = new Recipe();
         defaultRecipe2.setTitle("Hot ");
+        System.out.println(defaultRecipe1.getId());
 
-        for (Recipe recipe : recipeController.getRecipes()) {
-            assertThat(recipe).isEqualTo(defaultRecipe1);
-        }
+        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(defaultRecipe1);
     }
 
     @Test
     void testCanReplaceRecipe() throws Exception {
 
-        RecipeController recipeController = new RecipeController();
+        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
 
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Hot dog");
@@ -74,7 +71,7 @@ class RecipeControllerTest {
     @Test
     void testCanDeleteRecipe() throws Exception {
 
-        RecipeController recipeController = new RecipeController();
+        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Hot dog");
         recipeController.addRecipe(defaultRecipe1);

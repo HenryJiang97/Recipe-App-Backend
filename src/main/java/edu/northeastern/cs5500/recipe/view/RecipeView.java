@@ -10,10 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.northeastern.cs5500.recipe.JsonTransformer;
 import edu.northeastern.cs5500.recipe.controller.RecipeController;
 import edu.northeastern.cs5500.recipe.model.Recipe;
-import java.util.UUID;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 
 @Singleton
 @Slf4j
@@ -44,7 +44,7 @@ public class RecipeView implements View {
                 (request, response) -> {
                     final String paramId = request.params(":id");
                     log.debug("/recipe/:id<{}>", paramId);
-                    final UUID id = UUID.fromString(paramId);
+                    final ObjectId id = new ObjectId(paramId);
                     Recipe recipe = recipeController.getRecipe(id);
                     if (recipe == null) {
                         halt(404);
@@ -66,9 +66,10 @@ public class RecipeView implements View {
 
                     // Ignore the user-provided ID if there is one
                     recipe.setId(null);
-                    UUID id = recipeController.addRecipe(recipe);
+                    recipe = recipeController.addRecipe(recipe);
 
-                    response.redirect(String.format("/recipe/{}", id), 301);
+                    response.redirect(
+                            String.format("/recipe/{}", recipe.getId().toHexString()), 301);
                     return recipe;
                 });
 
