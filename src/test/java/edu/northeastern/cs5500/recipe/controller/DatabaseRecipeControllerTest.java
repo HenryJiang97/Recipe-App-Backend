@@ -38,20 +38,54 @@ class DatabaseRecipeControllerTest {
     }
 
     @Test
-    void testCanAddRecipe() {
-        // This test should NOT call register
-        // TODO: implement this test.
+    void testCanAddRecipe() throws Exception {
+        RecipeController recipeController = getRecipeController();
+        recipeController.recipes.dropAll();
+        final Recipe defaultRecipe1 = new Recipe();
+        defaultRecipe1.setTitle("A frog");
+        defaultRecipe1.setCookTime(0);
+        defaultRecipe1.setWaitTime(0);
+        defaultRecipe1.setPrepTime(0);
+        defaultRecipe1.setTotalTime(0);
+        Recipe test_recipe = recipeController.addRecipe(defaultRecipe1);
+
+        final Recipe defaultRecipe2 = new Recipe();
+        defaultRecipe2.setTitle("Hot ");
+        System.out.println(defaultRecipe1.getId());
+        for (Recipe recipe : recipeController.getRecipes()) {
+            assertThat(recipe).isEqualTo(defaultRecipe1);
+        }
+
+        assertThat(test_recipe).isEqualTo(defaultRecipe1);
     }
 
     @Test
-    void testCanReplaceRecipe() {
-        // This test should NOT call register
-        // TODO: implement this test.
+    void testCanReplaceRecipe() throws Exception {
+        RecipeController recipeController = getRecipeController();
+        final Recipe defaultRecipe1 = new Recipe();
+        defaultRecipe1.setTitle("Hot dog");
+        recipeController.addRecipe(defaultRecipe1);
+
+        final Recipe defaultRecipe2 = new Recipe();
+        defaultRecipe2.setTitle("Cold");
+        defaultRecipe2.setId(defaultRecipe1.getId());
+        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(defaultRecipe1);
+        recipeController.updateRecipe(defaultRecipe2);
+        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(defaultRecipe2);
     }
 
     @Test
-    void testCanDeleteRecipe() {
-        // This test should NOT call register
-        // TODO: implement this test
+    void testCanDeleteRecipe() throws Exception {
+        RecipeController recipeController = getRecipeController();
+        final Recipe defaultRecipe1 = new Recipe();
+        defaultRecipe1.setTitle("Hot dog");
+        recipeController.addRecipe(defaultRecipe1);
+
+        final Recipe defaultRecipe2 = new Recipe();
+        defaultRecipe2.setTitle("Cold");
+        recipeController.addRecipe(defaultRecipe2);
+        recipeController.deleteRecipe(defaultRecipe1.getId());
+        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(null);
+        assertThat(recipeController.getRecipe(defaultRecipe2.getId())).isEqualTo(defaultRecipe2);
     }
 }

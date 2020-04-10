@@ -20,7 +20,7 @@ import org.bson.types.ObjectId;
 @Singleton
 @Slf4j
 public class RecipeController {
-    private final GenericRepository<Recipe> recipes;
+    public final GenericRepository<Recipe> recipes;
     protected static final String invalidRecipe =
             "Recipe is not valid. Please replace with valid recipe";
     protected static final String duplicateKey =

@@ -57,15 +57,9 @@ class RecipeControllerTest {
         final Recipe defaultRecipe2 = new Recipe();
         defaultRecipe2.setTitle("Cold");
         defaultRecipe2.setId(defaultRecipe1.getId());
-
-        for (Recipe recipe : recipeController.getRecipes()) {
-            assertThat(recipe).isEqualTo(defaultRecipe1);
-        }
+        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(defaultRecipe1);
         recipeController.updateRecipe(defaultRecipe2);
-        for (Recipe recipe : recipeController.getRecipes()) {
-            assertThat(recipe).isEqualTo(defaultRecipe2);
-            assertThat(recipe).isNotEqualTo(defaultRecipe1);
-        }
+        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(defaultRecipe2);
     }
 
     @Test
@@ -80,10 +74,7 @@ class RecipeControllerTest {
         defaultRecipe2.setTitle("Cold");
         recipeController.addRecipe(defaultRecipe2);
         recipeController.deleteRecipe(defaultRecipe1.getId());
-
-        for (Recipe recipe : recipeController.getRecipes()) {
-            assertThat(recipe).isEqualTo(defaultRecipe2);
-            assertThat(recipe).isNotEqualTo(defaultRecipe1);
-        }
+        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(null);
+        assertThat(recipeController.getRecipe(defaultRecipe2.getId())).isEqualTo(defaultRecipe2);
     }
 }
