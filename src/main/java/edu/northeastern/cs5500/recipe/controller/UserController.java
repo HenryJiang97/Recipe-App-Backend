@@ -6,32 +6,27 @@ import edu.northeastern.cs5500.recipe.exceptions.NullKeyException;
 import edu.northeastern.cs5500.recipe.exceptions.UserNotFoundException;
 import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.User;
-import java.util.ArrayList;
+import edu.northeastern.cs5500.recipe.repository.GenericRepository;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 
 @Singleton
 @Slf4j
 public class UserController {
-    private Map<UUID, User> users;
+    public final GenericRepository<User> users;
 
     @Inject
-    UserController() {
-        this.users = new HashMap<>();
-    }
+    UserController(GenericRepository<User> userRepository) {
+        users = userRepository;
 
-    /** Initialize the database and add in default user samples. */
-    public void register() {
+        /** Initialize the database and add in default user samples. */
         log.info("UserController > register");
 
-        // TODO: This should be in a database
         log.info("UserController > register > adding default users");
 
         final User defaultUser1 = new User();
@@ -56,19 +51,16 @@ public class UserController {
      * @param uuid - the user id of the user
      */
     @Nullable
-    public User getUser(@Nonnull UUID uuid) {
+    public User getUser(@Nonnull ObjectId uuid) {
         log.debug("UserController > getUser({})", uuid);
-        return users.containsKey(uuid) ? users.get(uuid) : null;
+        return users.get(uuid);
     }
 
     /** Get the entire list of users from the database. */
     @Nonnull
     public Collection<User> getUsers() {
         log.debug("UserController > getUser()");
-        if (users.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return users.values();
+        return users.getAll();
     }
 
     /**
@@ -78,22 +70,15 @@ public class UserController {
      * @return the UUID generated for the new user
      */
     @Nonnull
-    public UUID addUser(@Nonnull User user) throws Exception {
+    public User addUser(@Nonnull User user) throws Exception {
         log.debug("UserController > addUser(...)");
-        final UUID id;
-        if (user.getId() == null) {
-            id = UUID.randomUUID();
-            user.setId(id);
-        } else {
-            id = user.getId();
-        }
+        ObjectId id = user.getId();
 
-        if (users.containsKey(id)) {
+        if (id != null && users.get(id) != null) {
             throw new DuplicateKeyException("DuplicateKeyException");
         }
 
-        users.put(id, user);
-        return id;
+        return users.add(user);
     }
 
     /**
@@ -103,7 +88,7 @@ public class UserController {
      */
     public void updateUser(@Nonnull User user) throws Exception {
         log.debug("UserController > updateUser(...)");
-        final UUID id = user.getId();
+        final ObjectId id = user.getId();
         if (id == null) {
             throw new NullKeyException("NullKeyException");
         }
@@ -112,11 +97,11 @@ public class UserController {
             throw new InvalidUserException("InvalidUserException");
         }
 
-        if (!users.containsKey(id)) {
+        if (users.get(id) == null) {
             throw new UserNotFoundException("KeyNotFoundException");
         }
 
-        users.put(id, user);
+        users.update(user);
     }
 
     /**
@@ -124,13 +109,13 @@ public class UserController {
      *
      * @param id - the unique id of the user needed to be deleted
      */
-    public void deleteUser(@Nonnull UUID id) throws Exception {
+    public void deleteUser(@Nonnull ObjectId id) throws Exception {
         log.debug("UserController > deleteUser(...)");
-        if (!users.containsKey(id)) {
+        if (users.get(id) == null) {
             throw new UserNotFoundException("KeyNotFoundException");
         }
 
-        users.remove(id);
+        users.delete(id);
     }
 
     /**
