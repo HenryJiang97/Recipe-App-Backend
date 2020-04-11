@@ -7,7 +7,8 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import edu.northeastern.cs5500.recipe.model.User;
-import java.util.UUID;
+import edu.northeastern.cs5500.recipe.repository.InMemoryRepository;
+import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +16,7 @@ class UserControllerTest {
 
     @Test
     void testRegisterCreatesUsers() {
-        UserController userController = new UserController();
-        assertThat(userController.getUsers()).isEmpty();
-        userController.register();
+        UserController userController = new UserController(new InMemoryRepository<User>());
         assertThat(userController.getUsers()).isNotEmpty();
     }
 
@@ -26,8 +25,7 @@ class UserControllerTest {
     @Test
     void testRegisterCreatesValidUsers() {
         // TODO: Why is this test failing?
-        this.userController = new UserController();
-        this.userController.register();
+        this.userController = new UserController(new InMemoryRepository<User>());
 
         for (User user : userController.getUsers()) {
             assertWithMessage(user.getUserName()).that(user.isValid()).isTrue();
@@ -40,7 +38,7 @@ class UserControllerTest {
 
         User user = new User();
         try {
-            UUID id = this.userController.addUser(user);
+            this.userController.addUser(user);
             assertThat(this.userController.getUsers().contains(user));
         } catch (Exception e) {
 
@@ -54,21 +52,17 @@ class UserControllerTest {
         try {
             // Add in new user
             User originalUser = new User();
-            UUID id = this.userController.addUser(originalUser);
+            this.userController.addUser(originalUser);
 
             // Replace user
             User newUser = new User();
-            newUser.setId(id);
+            newUser.setId(originalUser.getId());
             this.userController.updateUser(newUser);
 
             // Test
             boolean find = false;
-            for (User user : this.userController.getUsers()) {
-                if (user.getId() == id) {
-                    find = true;
-                    Assert.assertEquals(user, newUser);
-                }
-            }
+            assertThat(this.userController.getUser(originalUser.getId())).isEqualTo(newUser);
+
             if (!find) {
                 Assert.fail();
             }
@@ -83,12 +77,13 @@ class UserControllerTest {
         // This test should NOT call register
 
         try {
-            // Add new user
+            // Add new users
             User newUser = new User();
-            UUID id = this.userController.addUser(newUser);
+            this.userController.addUser(newUser);
+            ObjectId id = newUser.getId();
 
             // Delete that user
-            this.userController.deleteUser(id);
+            this.userController.deleteUser(newUser.getId());
 
             // Test
             boolean find = false;

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import lombok.Data;
+import org.bson.types.ObjectId;
 
 @Data
-public class User {
-    private UUID id;
+public class User implements Model {
+    private ObjectId id;
     private String userName;
     private String email;
     private String password;
@@ -30,7 +30,7 @@ public class User {
     }
 
     /** Get the unique id of the user. */
-    public UUID getId() {
+    public ObjectId getId() {
         return this.id;
     }
 
@@ -45,7 +45,7 @@ public class User {
     }
 
     /** Set the unique id of the user. */
-    public void setId(UUID id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
