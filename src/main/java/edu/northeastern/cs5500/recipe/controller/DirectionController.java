@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Slf4j
-public class DirectionController implements Controller {
+public class DirectionController {
     private Map<UUID, Direction> directions;
 
     @Inject
@@ -27,7 +27,6 @@ public class DirectionController implements Controller {
     }
 
     /** Initialize the database and add in default direction samples. */
-    @Override
     public void register() {
         log.info("UserController > register");
 

@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Slf4j
-public class UserController implements Controller {
+public class UserController {
     private Map<UUID, User> users;
 
     @Inject
@@ -28,7 +28,6 @@ public class UserController implements Controller {
     }
 
     /** Initialize the database and add in default user samples. */
-    @Override
     public void register() {
         log.info("UserController > register");
 

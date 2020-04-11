@@ -7,19 +7,30 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import edu.northeastern.cs5500.recipe.model.Recipe;
-import edu.northeastern.cs5500.recipe.repository.InMemoryRepository;
+import edu.northeastern.cs5500.recipe.repository.MongoDBRepository;
+import edu.northeastern.cs5500.recipe.service.MongoDBService;
 import org.junit.jupiter.api.Test;
 
-class RecipeControllerTest {
+/** Note that this test suite will fail with timeout exceptions if mongodb is not running. */
+class DatabaseRecipeControllerTest {
+    static MongoDBService mongoDBService;
+
+    RecipeController getRecipeController() {
+        if (mongoDBService == null) {
+            mongoDBService = new MongoDBService();
+        }
+        return new RecipeController(new MongoDBRepository<Recipe>(Recipe.class, mongoDBService));
+    }
+
     @Test
     void testRegisterCreatesRecipes() {
-        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
+        RecipeController recipeController = getRecipeController();
         assertThat(recipeController.getRecipes()).isNotEmpty();
     }
 
     @Test
     void testRegisterCreatesValidRecipes() {
-        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
+        RecipeController recipeController = getRecipeController();
 
         for (Recipe recipe : recipeController.getRecipes()) {
             assertWithMessage(recipe.getTitle()).that(recipe.isValid()).isTrue();
@@ -28,28 +39,29 @@ class RecipeControllerTest {
 
     @Test
     void testCanAddRecipe() throws Exception {
-        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
-
+        RecipeController recipeController = getRecipeController();
+        recipeController.recipes.dropAll();
         final Recipe defaultRecipe1 = new Recipe();
-        defaultRecipe1.setTitle("Hot dog");
+        defaultRecipe1.setTitle("A frog");
         defaultRecipe1.setCookTime(0);
         defaultRecipe1.setWaitTime(0);
         defaultRecipe1.setPrepTime(0);
         defaultRecipe1.setTotalTime(0);
-        recipeController.addRecipe(defaultRecipe1);
+        Recipe test_recipe = recipeController.addRecipe(defaultRecipe1);
 
         final Recipe defaultRecipe2 = new Recipe();
         defaultRecipe2.setTitle("Hot ");
         System.out.println(defaultRecipe1.getId());
+        for (Recipe recipe : recipeController.getRecipes()) {
+            assertThat(recipe).isEqualTo(defaultRecipe1);
+        }
 
-        assertThat(recipeController.getRecipe(defaultRecipe1.getId())).isEqualTo(defaultRecipe1);
+        assertThat(test_recipe).isEqualTo(defaultRecipe1);
     }
 
     @Test
     void testCanReplaceRecipe() throws Exception {
-
-        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
-
+        RecipeController recipeController = getRecipeController();
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Hot dog");
         recipeController.addRecipe(defaultRecipe1);
@@ -64,8 +76,7 @@ class RecipeControllerTest {
 
     @Test
     void testCanDeleteRecipe() throws Exception {
-
-        RecipeController recipeController = new RecipeController(new InMemoryRepository<Recipe>());
+        RecipeController recipeController = getRecipeController();
         final Recipe defaultRecipe1 = new Recipe();
         defaultRecipe1.setTitle("Hot dog");
         recipeController.addRecipe(defaultRecipe1);

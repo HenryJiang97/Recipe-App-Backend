@@ -52,6 +52,9 @@ dependencies {
 
     // Fluent assertions for testing
     testImplementation 'com.google.truth:truth:1.0.1'
+
+    // MongoDB client
+    implementation 'org.mongodb:mongodb-driver:3.12.1'
 }
 
 application {

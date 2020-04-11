@@ -7,17 +7,18 @@ import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Slf4j
-public class StatusController implements Controller {
+public class StatusController {
 
     @Inject
-    StatusController() {}
+    StatusController() {
+        log.info("StatusController > register");
+    }
 
     @Nonnull
     public String getStatus() {
         return "OK";
     }
 
-    @Override
     public void register() {
         log.info("StatusController > register");
     }
