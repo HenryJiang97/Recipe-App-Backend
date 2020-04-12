@@ -68,8 +68,7 @@ public class UserView implements View {
                     user.setId(null);
                     user = userController.addUser(user);
 
-                    response.redirect(
-                            String.format("/user/{}", user.getId().toHexString()), 301);
+                    response.redirect(String.format("/user/{}", user.getId().toHexString()), 301);
                     return user;
                 });
 
