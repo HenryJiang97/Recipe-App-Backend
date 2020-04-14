@@ -55,7 +55,7 @@ public class RecipeController {
         defaultRecipe3.setDescription(
                 "Luxurious and hearty, cheap and easy, this vegetarian pasta uses mostly pantry staples, requiring just a few fresh ingredients, like baby spinach, rosemary and heavy cream. Canned chickpeas form the foundation of the dish: They’re cooked until crisp and caramelized. Half are then saved as a garnish, while the rest are simmered until they break down and thicken the sauce. You can swap out your greens or beans, and if you want to experiment with flavor, raid your spice cabinet: Ground coriander, toasted fennel seeds, coarsely crumbled pink peppercorns or a sprinkle of smoked paprika perk up the dish.");
         defaultRecipe3.setYield(4);
-        
+
         final Direction directionStep1 = new Direction();
         directionStep1.setName("Step 1");
         directionStep1.setDescription("Bring a large pot of salted water to a boil over high.");
