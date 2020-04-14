@@ -11,6 +11,11 @@ public class ViewModule {
     public View provideRecipeView(RecipeView recipeView) {
         return recipeView;
     }
+    @Provides
+    @IntoSet
+    public View provideUserView(UserView userView) {
+        return userView;
+    }
 
     @Provides
     @IntoSet
