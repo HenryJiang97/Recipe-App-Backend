@@ -1,12 +1,11 @@
 package edu.northeastern.cs5500.recipe.controller;
 
 import edu.northeastern.cs5500.recipe.exceptions.DuplicateKeyException;
-import edu.northeastern.cs5500.recipe.exceptions.InvalidUserException;
-import edu.northeastern.cs5500.recipe.exceptions.NullKeyException;
 import edu.northeastern.cs5500.recipe.exceptions.UserNotFoundException;
 import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.User;
 import edu.northeastern.cs5500.recipe.repository.GenericRepository;
+import java.io.InvalidObjectException;
 import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,6 +71,9 @@ public class UserController {
     @Nonnull
     public User addUser(@Nonnull User user) throws Exception {
         log.debug("UserController > addUser(...)");
+        if (!user.isValid()) {
+            throw new InvalidObjectException("Invalid User");
+        }
         ObjectId id = user.getId();
 
         if (id != null && users.get(id) != null) {
@@ -88,18 +90,6 @@ public class UserController {
      */
     public void updateUser(@Nonnull User user) throws Exception {
         log.debug("UserController > updateUser(...)");
-        final ObjectId id = user.getId();
-        if (id == null) {
-            throw new NullKeyException("NullKeyException");
-        }
-
-        if (!user.isValid()) {
-            throw new InvalidUserException("InvalidUserException");
-        }
-
-        if (users.get(id) == null) {
-            throw new UserNotFoundException("KeyNotFoundException");
-        }
 
         users.update(user);
     }
