@@ -1,8 +1,6 @@
 package edu.northeastern.cs5500.recipe.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Data;
@@ -18,10 +16,10 @@ public class User implements Model {
     private Map<String, String> userPreferences;
 
     /** Construct a User class */
-    public User() {
-        this.favoriteRecipes = new ArrayList<>();
-        this.userPreferences = new HashMap<>();
-    }
+    // public User() {
+    //     this.favoriteRecipes = new ArrayList<>();
+    //     this.userPreferences = new HashMap<>();
+    // }
 
     /** @return true if this recipe is valid */
     @JsonIgnore
