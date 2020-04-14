@@ -20,6 +20,7 @@ public class Direction {
     private List<Ingredient> ingredients;
     private int time;
     private int temp;
+    private String description;
     private DirectionTypes directionType;
 
     /** Construct a User class */
