@@ -58,7 +58,7 @@ public class UserController {
     /** Get the entire list of users from the database. */
     @Nonnull
     public Collection<User> getUsers() {
-        log.debug("UserController > getUser()");
+        log.debug("UserController > getUsers()");
         return users.getAll();
     }
 
@@ -71,6 +71,7 @@ public class UserController {
     @Nonnull
     public User addUser(@Nonnull User user) throws Exception {
         log.debug("UserController > addUser(...)");
+        
         if (!user.isValid()) {
             throw new InvalidObjectException("Invalid User");
         }
@@ -101,10 +102,6 @@ public class UserController {
      */
     public void deleteUser(@Nonnull ObjectId id) throws Exception {
         log.debug("UserController > deleteUser(...)");
-        if (users.get(id) == null) {
-            throw new UserNotFoundException("KeyNotFoundException");
-        }
-
         users.delete(id);
     }
 

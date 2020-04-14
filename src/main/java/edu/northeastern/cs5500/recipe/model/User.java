@@ -18,10 +18,10 @@ public class User implements Model {
     private Map<String, String> userPreferences;
 
     /** Construct a User class */
-    public User() {
-        this.favoriteRecipes = new ArrayList<>();
-        this.userPreferences = new HashMap<>();
-    }
+    // public User() {
+    //     this.favoriteRecipes = new ArrayList<>();
+    //     this.userPreferences = new HashMap<>();
+    // }
 
     /** @return true if this recipe is valid */
     @JsonIgnore

@@ -43,7 +43,7 @@ public class UserView implements View {
                 "/user/:id",
                 (request, response) -> {
                     final String paramId = request.params(":id");
-                    log.debug("/recipe/:id<{}>", paramId);
+                    log.debug("/user/:id<{}>", paramId);
                     final ObjectId id = new ObjectId(paramId);
                     User user = userController.getUser(id);
                     if (user == null) {
