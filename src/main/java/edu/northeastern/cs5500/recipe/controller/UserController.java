@@ -1,7 +1,6 @@
 package edu.northeastern.cs5500.recipe.controller;
 
 import edu.northeastern.cs5500.recipe.exceptions.DuplicateKeyException;
-import edu.northeastern.cs5500.recipe.exceptions.UserNotFoundException;
 import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.User;
 import edu.northeastern.cs5500.recipe.repository.GenericRepository;
@@ -71,7 +70,7 @@ public class UserController {
     @Nonnull
     public User addUser(@Nonnull User user) throws Exception {
         log.debug("UserController > addUser(...)");
-        
+
         if (!user.isValid()) {
             throw new InvalidObjectException("Invalid User");
         }
