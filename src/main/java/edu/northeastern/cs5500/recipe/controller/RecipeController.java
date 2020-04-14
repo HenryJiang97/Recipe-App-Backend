@@ -38,9 +38,9 @@ public class RecipeController {
 
         log.info("RecipeController > construct");
 
-        // if (recipes.count() > 0) {
-        //     return;
-        // }
+        if (recipes.count() > 0) {
+            return;
+        }
 
         /** Creates default recipes and puts them in database. */
         final Recipe defaultRecipe1 = new Recipe();

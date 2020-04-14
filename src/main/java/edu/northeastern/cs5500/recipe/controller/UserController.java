@@ -20,7 +20,12 @@ public class UserController {
 
     @Inject
     UserController(GenericRepository<User> userRepository) {
+
         users = userRepository;
+        if (users.count() > 0) {
+            return;
+        }
+
 
         /** Initialize the database and add in default user samples. */
         log.info("UserController > register");
