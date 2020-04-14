@@ -9,4 +9,9 @@ public class ModelModule {
     public Class<Recipe> provideRecipeClass() {
         return Recipe.class;
     }
+
+    @Provides
+    public Class<User> provideUserClass() {
+        return User.class;
+    }
 }
