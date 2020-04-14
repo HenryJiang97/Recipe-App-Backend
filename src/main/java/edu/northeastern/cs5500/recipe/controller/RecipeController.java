@@ -3,11 +3,11 @@ package edu.northeastern.cs5500.recipe.controller;
 import edu.northeastern.cs5500.recipe.exceptions.DuplicateKeyException;
 import edu.northeastern.cs5500.recipe.exceptions.KeyNotFoundException;
 import edu.northeastern.cs5500.recipe.model.Direction;
+import edu.northeastern.cs5500.recipe.model.Direction.DirectionTypes;
+import edu.northeastern.cs5500.recipe.model.Ingredient;
 import edu.northeastern.cs5500.recipe.model.Rating;
 import edu.northeastern.cs5500.recipe.model.Recipe;
 import edu.northeastern.cs5500.recipe.model.Unit;
-import edu.northeastern.cs5500.recipe.model.Ingredient;
-import edu.northeastern.cs5500.recipe.model.Direction.DirectionTypes;
 import edu.northeastern.cs5500.recipe.repository.GenericRepository;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
@@ -52,7 +52,8 @@ public class RecipeController {
 
         final Recipe defaultRecipe3 = new Recipe();
         defaultRecipe3.setTitle("Creamy Chickpea Pasta With Spinach and Rosemary");
-        defaultRecipe3.setDescription("Luxurious and hearty, cheap and easy, this vegetarian pasta uses mostly pantry staples, requiring just a few fresh ingredients, like baby spinach, rosemary and heavy cream. Canned chickpeas form the foundation of the dish: They’re cooked until crisp and caramelized. Half are then saved as a garnish, while the rest are simmered until they break down and thicken the sauce. You can swap out your greens or beans, and if you want to experiment with flavor, raid your spice cabinet: Ground coriander, toasted fennel seeds, coarsely crumbled pink peppercorns or a sprinkle of smoked paprika perk up the dish.");
+        defaultRecipe3.setDescription(
+                "Luxurious and hearty, cheap and easy, this vegetarian pasta uses mostly pantry staples, requiring just a few fresh ingredients, like baby spinach, rosemary and heavy cream. Canned chickpeas form the foundation of the dish: They’re cooked until crisp and caramelized. Half are then saved as a garnish, while the rest are simmered until they break down and thicken the sauce. You can swap out your greens or beans, and if you want to experiment with flavor, raid your spice cabinet: Ground coriander, toasted fennel seeds, coarsely crumbled pink peppercorns or a sprinkle of smoked paprika perk up the dish.");
         defaultRecipe3.setYield(4);
         final Direction directionStep1 = new Direction();
         directionStep1.setName("Step 1");
@@ -61,7 +62,8 @@ public class RecipeController {
         directionStep1.setTime(200);
         final Direction directionStep2 = new Direction();
         directionStep2.setName("Step 2");
-        directionStep2.setDescription("In a wide, deep skillet, heat the oil over medium-high. Add the chickpeas, rosemary and Aleppo pepper, if using. Season generously with salt and pepper, and cook, stirring occasionally, until chickpeas start to caramelize at their edges and pop, 5 to 7 minutes. Using a slotted spoon, transfer about half the chickpeas to a bowl. Reserve for garnish.");
+        directionStep2.setDescription(
+                "In a wide, deep skillet, heat the oil over medium-high. Add the chickpeas, rosemary and Aleppo pepper, if using. Season generously with salt and pepper, and cook, stirring occasionally, until chickpeas start to caramelize at their edges and pop, 5 to 7 minutes. Using a slotted spoon, transfer about half the chickpeas to a bowl. Reserve for garnish.");
         directionStep2.setDirectionType(DirectionTypes.COOK);
         directionStep2.setTime(300);
         ArrayList<Ingredient> direction2Ingridents = new ArrayList<>();
